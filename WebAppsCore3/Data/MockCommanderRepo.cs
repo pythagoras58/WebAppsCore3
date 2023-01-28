@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 using WebAppsCore3.Models;
+
 
 namespace WebAppsCore3.Data
 {
-    public class MockCommanderRepo : ICommanderInterface
+    public class MockCommanderRepo : ICommanderRepo
     {
         public IEnumerable<Command> GetAppCommands()
         {
@@ -12,7 +14,7 @@ namespace WebAppsCore3.Data
 
         public Command GetCommandById(int id)
         {
-            throw new System.NotImplementedException();
+            return new Command { Id = 0, HowTo = "Write Code", Line = "Get laptop", Platform = "Windows" };
         }
     }
 }

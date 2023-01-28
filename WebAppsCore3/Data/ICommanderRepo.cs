@@ -3,7 +3,7 @@ using WebAppsCore3.Models;
 
 namespace WebAppsCore3.Data
 {
-    public interface ICommanderInterface
+    public interface ICommanderRepo
     {
         IEnumerable<Command> GetAppCommands();
 
