@@ -5,7 +5,7 @@ using WebAppsCore3.Models;
 
 namespace WebAppsCore3.Controllers
 {
-    [Route("api/[controller]")]    
+    [Route("api/commands")]    
     [ApiController]
     public class CommandsController : ControllerBase
     {
@@ -15,14 +15,18 @@ namespace WebAppsCore3.Controllers
         [HttpGet]
         public ActionResult <IEnumerable<Command>> GetAllCommands() {
             //use repository to pull the data
-            return null;
+            var commands = _commanderRepo.GetAppCommands();
+
+            return  Ok(commands);
         }
 
 
         [HttpGet("{id}")]
         public ActionResult <Command> GetCommandById(int id)
         {
-            return null;
+            var command = _commanderRepo.GetCommandById(id);
+
+            return Ok(command);
         }
     }
 }
