@@ -9,12 +9,18 @@ namespace WebAppsCore3.Data
     {
         public IEnumerable<Command> GetAppCommands()
         {
-            throw new System.NotImplementedException();
+            var commands = new List<Command>{
+                new Command { Id = 1, HowTo = "Write Code", Line = "Get laptop", Platform = "Windows" },
+                new Command { Id = 2, HowTo = "Write Code", Line = "Get laptop", Platform = "Apple" },
+                new Command { Id = 3, HowTo = "Write Code", Line = "Get laptop", Platform = "Linux" }
+            };
+
+            return commands;
         }
 
         public Command GetCommandById(int id)
         {
-            return new Command { Id = 0, HowTo = "Write Code", Line = "Get laptop", Platform = "Windows" };
+            return new Command { Id = id, HowTo = "Write Code", Line = "Get laptop", Platform = "Windows" };
         }
     }
 }
