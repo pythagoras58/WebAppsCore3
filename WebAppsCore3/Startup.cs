@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppsCore3.Data;
+using WebAppsCore3.Data.SqlCommander;
 
 namespace WebAppsCore3
 {
@@ -31,7 +32,8 @@ namespace WebAppsCore3
                 Configuration.GetConnectionString("CommanderConnection")));
 
             services.AddControllers();
-            services.AddScoped<ICommanderRepo, MockCommanderRepo>(); // DI 
+            services.AddScoped<ICommanderRepo, SqlCommanderRepo>();
+           // services.AddScoped<ICommanderRepo, MockCommanderRepo>(); // DI 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

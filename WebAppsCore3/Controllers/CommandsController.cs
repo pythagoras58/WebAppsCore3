@@ -18,9 +18,14 @@ namespace WebAppsCore3.Controllers
         //private readonly MockCommanderRepo _commanderRepo = new MockCommanderRepo();// make an instance of the repo
 
         [HttpGet]
+        [ProducesResponseType(200)]
         public ActionResult <IEnumerable<Command>> GetAllCommands() {
             //use repository to pull the data
             var commands = _respository.GetAppCommands();
+            if(commands == null)
+            {
+                return NoContent();
+            }
 
             return  Ok(commands);
         }
@@ -30,6 +35,10 @@ namespace WebAppsCore3.Controllers
         public ActionResult <Command> GetCommandById(int id)
         {
             var command = _respository.GetCommandById(id);
+            if (command == null)
+            {
+                return NotFound();
+            }
 
             return Ok(command);
         }
