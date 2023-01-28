@@ -9,13 +9,18 @@ namespace WebAppsCore3.Controllers
     [ApiController]
     public class CommandsController : ControllerBase
     {
-        // make an instance of the repo
-        private readonly MockCommanderRepo _commanderRepo = new MockCommanderRepo();
+        // Using DI
+        private readonly ICommanderRepo _respository;
+        public CommandsController(ICommanderRepo resitory) { 
+            _respository= resitory;
+        }
+        
+        //private readonly MockCommanderRepo _commanderRepo = new MockCommanderRepo();// make an instance of the repo
 
         [HttpGet]
         public ActionResult <IEnumerable<Command>> GetAllCommands() {
             //use repository to pull the data
-            var commands = _commanderRepo.GetAppCommands();
+            var commands = _respository.GetAppCommands();
 
             return  Ok(commands);
         }
@@ -24,7 +29,7 @@ namespace WebAppsCore3.Controllers
         [HttpGet("{id}")]
         public ActionResult <Command> GetCommandById(int id)
         {
-            var command = _commanderRepo.GetCommandById(id);
+            var command = _respository.GetCommandById(id);
 
             return Ok(command);
         }
