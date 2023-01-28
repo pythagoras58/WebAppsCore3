@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppsCore3.Data;
 
 namespace WebAppsCore3
 {
@@ -26,6 +27,7 @@ namespace WebAppsCore3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<ICommanderRepo, MockCommanderRepo>(); // DI 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
