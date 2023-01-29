@@ -10,6 +10,8 @@ namespace WebAppsCore3.Profiles
         public CommandsProfile() 
         {
             CreateMap<Command, CommandReadDTO>();
+
+            CreateMap<CommandCreateDTO, Command>();
         }
     }
 }

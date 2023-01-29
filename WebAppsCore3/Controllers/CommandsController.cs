@@ -32,11 +32,11 @@ namespace WebAppsCore3.Controllers
                 return NoContent();
             }
 
-            return  Ok(_mapper.Map<CommandReadDTO>(commands));
+            return  Ok(_mapper.Map<IEnumerable<CommandReadDTO>>(commands));
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCommandById")]
         public ActionResult <CommandReadDTO> GetCommandById(int id)
         {
             var command = _respository.GetCommandById(id);
@@ -46,6 +46,23 @@ namespace WebAppsCore3.Controllers
             }
 
             return Ok(_mapper.Map<CommandReadDTO>(command));
+        }
+
+
+        // POST
+        [HttpPost]
+        public ActionResult<CommandCreateDTO> CreateCommand(CommandCreateDTO commandCreateDTO) 
+        {
+            var  commandModel = _mapper.Map<Command>(commandCreateDTO);
+
+            _respository.CreateCommand(commandModel);
+            _respository.SaveChanges();
+
+            var commandReadDTO = _mapper.Map<CommandReadDTO>(commandModel);
+
+            // use createdAt Route
+            return CreatedAtRoute(nameof(GetCommandById), new {Id = commandReadDTO.Id}, commandReadDTO);
+           // return Ok(commandReadDTO);
         }
     }
 }
