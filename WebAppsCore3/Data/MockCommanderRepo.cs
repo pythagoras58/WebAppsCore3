@@ -7,6 +7,11 @@ namespace WebAppsCore3.Data
 {
     public class MockCommanderRepo : ICommanderRepo
     {
+        public void CreateCommand(Command command)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Command> GetAppCommands()
         {
             var commands = new List<Command>{
@@ -21,6 +26,11 @@ namespace WebAppsCore3.Data
         public Command GetCommandById(int id)
         {
             return new Command { Id = id, HowTo = "Write Code", Line = "Get laptop", Platform = "Windows" };
+        }
+
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

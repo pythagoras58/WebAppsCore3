@@ -12,6 +12,18 @@ namespace WebAppsCore3.Data.SqlCommander
         {
                 _context = context;
         }
+
+        public void CreateCommand(Command command)
+        {
+            // check for errors
+            if(command == null)
+            {
+                throw new System.ArgumentNullException(nameof(command));
+            }
+
+            _context.Commands.Add(command);
+        }
+
         public IEnumerable<Command> GetAppCommands()
         {
             return _context.Commands.ToList();
@@ -20,6 +32,11 @@ namespace WebAppsCore3.Data.SqlCommander
         public Command GetCommandById(int id)
         {
            return _context.Commands.FirstOrDefault(c => c.Id == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

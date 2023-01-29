@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAppsCore3.Data;
+using WebAppsCore3.DTOs;
 using WebAppsCore3.Models;
 
 namespace WebAppsCore3.Controllers
@@ -11,15 +13,18 @@ namespace WebAppsCore3.Controllers
     {
         // Using DI
         private readonly ICommanderRepo _respository;
-        public CommandsController(ICommanderRepo resitory) { 
+        private readonly IMapper _mapper;
+
+        public CommandsController(ICommanderRepo resitory, IMapper mapper) { 
             _respository= resitory;
+            _mapper = mapper;
         }
         
         //private readonly MockCommanderRepo _commanderRepo = new MockCommanderRepo();// make an instance of the repo
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public ActionResult <IEnumerable<Command>> GetAllCommands() {
+        public ActionResult <IEnumerable<CommandReadDTO>> GetAllCommands() {
             //use repository to pull the data
             var commands = _respository.GetAppCommands();
             if(commands == null)
@@ -27,12 +32,12 @@ namespace WebAppsCore3.Controllers
                 return NoContent();
             }
 
-            return  Ok(commands);
+            return  Ok(_mapper.Map<CommandReadDTO>(commands));
         }
 
 
         [HttpGet("{id}")]
-        public ActionResult <Command> GetCommandById(int id)
+        public ActionResult <CommandReadDTO> GetCommandById(int id)
         {
             var command = _respository.GetCommandById(id);
             if (command == null)
@@ -40,7 +45,7 @@ namespace WebAppsCore3.Controllers
                 return NotFound();
             }
 
-            return Ok(command);
+            return Ok(_mapper.Map<CommandReadDTO>(command));
         }
     }
 }
