@@ -38,5 +38,10 @@ namespace WebAppsCore3.Data.SqlCommander
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public void UpdateCommand(Command command)
+        {
+            // do nothing
+        }
     }
 }

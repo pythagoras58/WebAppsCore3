@@ -64,5 +64,27 @@ namespace WebAppsCore3.Controllers
             return CreatedAtRoute(nameof(GetCommandById), new {Id = commandReadDTO.Id}, commandReadDTO);
            // return Ok(commandReadDTO);
         }
+
+
+        // Update
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDTO commandUpdateDTO)
+        {
+            var commandFromRepo = _respository.GetCommandById(id);
+
+            if(commandFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(commandUpdateDTO,commandFromRepo);
+
+            _respository.UpdateCommand(commandFromRepo);
+
+            _respository.SaveChanges();
+
+            return NoContent();
+
+        }
     }
 }
