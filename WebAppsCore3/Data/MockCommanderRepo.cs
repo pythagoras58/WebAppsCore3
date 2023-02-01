@@ -33,6 +33,11 @@ namespace WebAppsCore3.Data
             throw new System.NotImplementedException();
         }
 
+        public void SoftDeleteCommand(Command command)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void UpdateCommand(Command command)
         {
             throw new System.NotImplementedException();

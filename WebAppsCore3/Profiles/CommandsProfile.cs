@@ -14,6 +14,8 @@ namespace WebAppsCore3.Profiles
             CreateMap<CommandCreateDTO, Command>();
 
             CreateMap<CommandUpdateDTO, Command>();
+
+            CreateMap<Command, CommandUpdateDTO>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAppsCore3.Data;
@@ -85,6 +86,50 @@ namespace WebAppsCore3.Controllers
 
             return NoContent();
 
+        }
+
+
+        //patch
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommand(int id, JsonPatchDocument<CommandUpdateDTO> patchDTO)
+        {
+            var commandFromRepo = _respository.GetCommandById(id);
+            if(commandFromRepo == null)
+            {
+                return NotFound("Specified Id Does Not Relate To Any Transaction");
+            }
+
+            var commandToPatch = _mapper.Map<CommandUpdateDTO>(commandFromRepo);
+            patchDTO.ApplyTo(commandToPatch, ModelState); // apply the patch
+
+            //validation check
+            if (!TryValidateModel(commandToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            //update the model data
+            _mapper.Map(commandToPatch, commandFromRepo);
+            _respository.UpdateCommand(commandFromRepo);
+            _respository.SaveChanges();
+
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            var commandFromRepo = _respository.GetCommandById(id);
+            if (commandFromRepo == null)
+            {
+                return NotFound("Specified Id Does Not Relate To Any Transaction");
+            }
+
+            _respository.SoftDeleteCommand(commandFromRepo);
+            _respository.SaveChanges();
+
+            return NoContent();
         }
     }
 }

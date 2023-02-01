@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,17 @@ namespace WebAppsCore3
             services.AddDbContext<CommanderContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("CommanderConnection")));
 
-            services.AddControllers();
+            // newtonsoft serializer inclusion
+
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommanderRepo, SqlCommanderRepo>();
            // services.AddScoped<ICommanderRepo, MockCommanderRepo>(); // DI 
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

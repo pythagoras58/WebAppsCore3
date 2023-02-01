@@ -39,6 +39,15 @@ namespace WebAppsCore3.Data.SqlCommander
             return (_context.SaveChanges() >= 0);
         }
 
+        public void SoftDeleteCommand(Command command)
+        {
+            if(command == null )
+            {
+                throw new System.ArgumentNullException(nameof(command));
+            }
+            _context.Commands.Remove(command);
+        }
+
         public void UpdateCommand(Command command)
         {
             // do nothing

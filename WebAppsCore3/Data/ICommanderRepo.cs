@@ -13,5 +13,7 @@ namespace WebAppsCore3.Data
         void CreateCommand(Command command);
 
         void UpdateCommand(Command command);
+
+        void SoftDeleteCommand(Command command);
     }
 }
